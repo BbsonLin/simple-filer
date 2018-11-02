@@ -1,33 +1,20 @@
 <template>
   <section class="container">
-    <div>
-      <logo/>
-      <h1 class="title">
-        simple-filer
-      </h1>
-      <h2 class="subtitle">
-        A simple file manager
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
-    </div>
+    <p
+      v-for="(file, index) in files"
+      :key="index">{{ file.basic.name }}</p>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  data () {
+    return {
+      files: []
+    }
+  },
+  async mounted () {
+    this.files = await this.$axios.$get('/browse/')
   }
 }
 </script>
@@ -37,6 +24,7 @@ export default {
 .container {
   min-height: 100vh;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   text-align: center;
